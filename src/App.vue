@@ -8,7 +8,7 @@ import UserProfileComponent from "./views/UserProfileComponent.vue";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <div class="wrapper">
       <nav>
         <RouterLink to="/auth">Login & Register</RouterLink>
@@ -18,9 +18,9 @@ import UserProfileComponent from "./views/UserProfileComponent.vue";
         <RouterLink to="/userprofile">User Profile</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
 
-  <!-- <RouterView /> -->
+  <RouterView />
 </template>
 
 <script>
