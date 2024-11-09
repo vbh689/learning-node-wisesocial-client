@@ -21,21 +21,35 @@
             <div class="col-lg-6">
               <div class="login-sec">
                 <ul class="sign-control">
-                  <li data-tab="tab-1" class="current">
+                  <li
+                    data-tab="tab-1"
+                    v-on:click="chooseType('login')"
+                    :class="{ current: choseType == 'login' }"
+                  >
+                    <!-- if click on login, then add class current -->
                     <a href="#" title="">Sign In</a>
                   </li>
-                  <li data-tab="tab-2">
+                  <li
+                    data-tab="tab-2"
+                    v-on:click="chooseType('register')"
+                    :class="{ current: choseType == 'register' }"
+                  >
+                    <!-- if click on register, then add class current -->
                     <a href="#" title="">Sign Up</a>
                   </li>
                 </ul>
-                <div class="sign_in_sec current" id="tab-1">
+                <div
+                  class="sign_in_sec"
+                  id="tab-1"
+                  :class="{ current: choseType == 'login' }"
+                >
                   <h3>Sign In</h3>
                   <form>
                     <div class="row">
                       <div class="col-lg-12 no-pdd">
                         <div class="sn-field">
                           <input type="text" name="email" placeholder="Email" />
-                          <i class="fa fa-user"></i>
+                          <i class="fa fa-envelope"></i>
                         </div>
                         <!--sn-field end-->
                       </div>
@@ -57,14 +71,33 @@
                   <!--login-resources end-->
                 </div>
                 <!--sign_in_sec end-->
-                <div class="sign_in_sec" id="tab-2">
+                <div
+                  class="sign_in_sec"
+                  id="tab-2"
+                  :class="{ current: choseType == 'register' }"
+                >
+                  <h3>Sign Up</h3>
                   <!--signup-tab end-->
                   <div class="dff-tab current" id="tab-3">
                     <form>
                       <div class="row">
                         <div class="col-lg-12 no-pdd">
                           <div class="sn-field">
-                            <input type="text" name="name" placeholder="氏名" />
+                            <input
+                              type="email"
+                              name="email"
+                              placeholder="Email"
+                            />
+                            <i class="fa fa-envelope"></i>
+                          </div>
+                        </div>
+                        <div class="col-lg-12 no-pdd">
+                          <div class="sn-field">
+                            <input
+                              type="text"
+                              name="name"
+                              placeholder="Full Name"
+                            />
                             <i class="fa fa-user"></i>
                           </div>
                         </div>
@@ -73,7 +106,7 @@
                             <input
                               type="text"
                               name="country"
-                              placeholder="国"
+                              placeholder="Country"
                             />
                             <i class="fa fa-globe"></i>
                           </div>
@@ -105,14 +138,16 @@
                               <label for="c2">
                                 <span></span>
                               </label>
-                              <small> はい、Wise
-                                の利用規約を理解し、同意します。</small>
+                              <small>
+                                I understand and accept Wise Social's Term of
+                                service.</small
+                              >
                             </div>
                             <!--fgt-sec end-->
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
-                          <button type="submit" value="submit">開始する</button>
+                          <button type="submit" value="submit">Sign Up</button>
                         </div>
                       </div>
                     </form>
@@ -149,7 +184,7 @@ export default {
      ******************************* Initialize global variables ***********************************************
      **********************************************************************************************************/
     return {
-      msg: "Test message 1.",
+      choseType: "login", // default to login screen
     };
   },
   /**
@@ -217,21 +252,21 @@ export default {
     defaultFunction() {
       this.msg = "Replace message here!";
     },
-    
-    leaveRoom() {
-      this.$socket.emit("ClientSendCommentToServer", {
-        transaction_id: this.transaction.id,
-        // Pass param obj]
-      });
-    },
-    // Join a room
-    joinRoom() {
-      this.$socket.emit("ClientSendCommentToServer", {
-        // Pass param obj
-        // transaction_id: this.transaction.id,
-        transaction_id: 1,
-      });
-    },
+
+    // leaveRoom() {
+    //   this.$socket.emit("ClientSendCommentToServer", {
+    //     transaction_id: this.transaction.id,
+    //     // Pass param obj]
+    //   });
+    // },
+    // // Join a room
+    // joinRoom() {
+    //   this.$socket.emit("ClientSendCommentToServer", {
+    //     // Pass param obj
+    //     // transaction_id: this.transaction.id,
+    //     transaction_id: 1,
+    //   });
+    // },
     /**
      * Example default function using param
      *
@@ -241,6 +276,15 @@ export default {
     defaultFunctionUsingParam(pageNum) {
       console.log(pageNum);
       return false;
+    },
+
+    /**
+     * Default function to choose login or register
+     *
+     * @param type string "login" or "register"
+     */
+    chooseType(type) {
+      this.choseType = type;
     },
 
     /***********************************************************************************************************
