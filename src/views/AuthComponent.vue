@@ -79,7 +79,7 @@
                   <h3>Sign Up</h3>
                   <!--signup-tab end-->
                   <div class="dff-tab current" id="tab-3">
-                    <form>
+                    <form action="#">
                       <div class="row">
                         <div class="col-lg-12 no-pdd">
                           <div class="sn-field">
@@ -87,8 +87,12 @@
                               type="email"
                               name="email"
                               placeholder="Email"
+                              v-model="registerEmail"
                             />
                             <i class="fa fa-envelope"></i>
+                            <span class="text-danger msgError">{{
+                              registerErrorEmailMsg
+                            }}</span>
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
@@ -97,8 +101,12 @@
                               type="text"
                               name="name"
                               placeholder="Full Name"
+                              v-model="registerFullName"
                             />
                             <i class="fa fa-user"></i>
+                            <span class="text-danger msgError">{{
+                              registerErrorFullNameMsg
+                            }}</span>
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
@@ -107,8 +115,12 @@
                               type="text"
                               name="country"
                               placeholder="Country"
+                              v-model="registerCountry"
                             />
                             <i class="fa fa-globe"></i>
+                            <span class="text-danger msgError">{{
+                              registerErrorCountryMsg
+                            }}</span>
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
@@ -117,8 +129,12 @@
                               type="password"
                               name="password"
                               placeholder="Password"
+                              v-model="registerPassword"
                             />
                             <i class="fa fa-lock"></i>
+                            <span class="text-danger msgError">{{
+                              registerErrorPasswordMsg
+                            }}</span>
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
@@ -127,27 +143,46 @@
                               type="password"
                               name="repeat-password"
                               placeholder="Repeat Password"
+                              v-model="registerRePassword"
                             />
                             <i class="fa fa-lock"></i>
+                            <span class="text-danger msgError">{{
+                              registerErrorRePasswordMsg
+                            }}</span>
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
                           <div class="checky-sec st2">
                             <div class="fgt-sec">
-                              <input type="checkbox" name="cc" id="c2" />
+                              <input
+                                type="checkbox"
+                                onclick="registerCheckAllow()"
+                                :checked="this.registerToS === true"
+                                name="cc"
+                                id="c2"
+                                v-model="registerToS"
+                              />
                               <label for="c2">
                                 <span></span>
                               </label>
                               <small>
                                 I understand and accept Wise Social's Term of
-                                service.</small
+                                Service.</small
                               >
                             </div>
                             <!--fgt-sec end-->
                           </div>
                         </div>
                         <div class="col-lg-12 no-pdd">
-                          <button type="submit" value="submit">Sign Up</button>
+                          <button
+                            :class="{
+                              'cursor-not-allowed': this.registerToS == false,
+                            }"
+                            :disabled="this.registerToS"
+                            v-on:click="registerValidation()"
+                          >
+                            Sign Up
+                          </button>
                         </div>
                       </div>
                     </form>
@@ -185,6 +220,22 @@ export default {
      **********************************************************************************************************/
     return {
       choseType: "login", // default to login screen
+
+      // default register variables
+      registerEmail: "",
+      registerPassword: "",
+      registerRePassword: "",
+      registerFullName: "",
+      registerCountry: "",
+      registerToS: false,
+
+      // error messages
+      registerErrorEmailMsg: "",
+      registerErrorPasswordMsg: "",
+      registerErrorRePasswordMsg: "",
+      registerErrorFullNameMsg: "",
+      registerErrorCountryMsg: "",
+      // registerErrorToSMsg: 'You must accept Term of Service.',
     };
   },
   /**
@@ -267,6 +318,7 @@ export default {
     //     transaction_id: 1,
     //   });
     // },
+
     /**
      * Example default function using param
      *
@@ -276,6 +328,67 @@ export default {
     defaultFunctionUsingParam(pageNum) {
       console.log(pageNum);
       return false;
+    },
+
+    /**
+     * Validate function for form
+     * Show msg error if form is invalid
+     * Enable submit button
+     * Call to register function then send data to server
+     */
+    registerValidation() {
+      // validate email
+      if (this.registerEmail == "") {
+        this.registerErrorEmailMsg = "Use a correct email.";
+      } else {
+        this.registerErrorEmailMsg = "";
+      }
+      // validate full name
+      if (this.registerFullName == "") {
+        this.registerErrorFullNameMsg = "Use a correct full name.";
+      } else {
+        this.registerErrorFullNameMsg = "";
+      }
+      // validate country
+      if (this.registerCountry.length < 4) {
+        this.registerErrorCountryMsg = "Use a correct country.";
+      } else {
+        this.registerErrorCountryMsg = "";
+      }
+      // validate password
+      if (this.registerPassword == "") {
+        this.registerErrorPasswordMsg = "Use a correct password.";
+      } else if (this.registerPassword.length < 8) {
+        this.registerErrorPasswordMsg = "Minimum 8 characters required.";
+      } else {
+        this.registerErrorPasswordMsg = "";
+      }
+      // validate re-password
+      if (this.registerRePassword != this.registerPassword) {
+        this.registerErrorRePasswordMsg = "Password not match.";
+      } else {
+        this.registerErrorRePasswordMsg = "";
+      }
+
+      // call to register function
+      if (
+        this.registerErrorEmailMsg == "" &&
+        this.registerErrorPasswordMsg == "" &&
+        this.registerErrorRePasswordMsg == "" &&
+        this.registerErrorFullNameMsg == "" &&
+        this.registerErrorCountryMsg == ""
+      ) {
+        this.register();
+      }
+      return null;
+    },
+
+    registerCheckAllow() {
+      if (this.registerToS === true) {
+        this.registerToS = false;
+      } else if (this.registerToS === false) {
+        this.registerToS = true;
+      }
     },
 
     /**
@@ -304,6 +417,30 @@ export default {
         console.log(err);
       }
     },
+
+    /**
+     * Async/await for register function
+     *
+     * Call to /register endpoint
+     * Method: POST pass param
+     * Redirect route /auth
+     */
+    async register() {
+      try {
+        const callRegisterAPI = await axios
+          .post("/register", {
+            // Pass params to header
+          })
+          .then(function (response) {
+            // API response success
+          })
+          .catch(function (error) {
+            // API response error code
+          });
+      } catch (err) {
+        // console.log(err);
+      }
+    },
   },
 };
 </script>
@@ -312,4 +449,11 @@ export default {
 /**
 * Custom local style css
 */
+.msgError {
+  font-size: 10px !important;
+  right: 5px !important;
+}
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
 </style>
