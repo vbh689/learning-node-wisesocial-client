@@ -44,7 +44,7 @@
                   :class="{ current: choseType == 'login' }"
                 >
                   <h3>Sign In</h3>
-                  <form>
+                  <div class="form">
                     <div class="row">
                       <div class="col-lg-12 no-pdd">
                         <div class="sn-field">
@@ -67,7 +67,7 @@
                         <button type="submit" value="submit">Sign In</button>
                       </div>
                     </div>
-                  </form>
+                  </div>
                   <!--login-resources end-->
                 </div>
                 <!--sign_in_sec end-->
@@ -79,7 +79,7 @@
                   <h3>Sign Up</h3>
                   <!--signup-tab end-->
                   <div class="dff-tab current" id="tab-3">
-                    <form action="#">
+                    <div class="form">
                       <div class="row">
                         <div class="col-lg-12 no-pdd">
                           <div class="sn-field">
@@ -178,14 +178,14 @@
                             :class="{
                               'cursor-not-allowed': this.registerToS == false,
                             }"
-                            :disabled="this.registerToS"
+                            :disabled="this.registerToS === false" 
                             v-on:click="registerValidation()"
                           >
                             Sign Up
                           </button>
                         </div>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
