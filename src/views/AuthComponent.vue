@@ -48,7 +48,7 @@
                     <div class="row">
                       <div class="col-lg-12 no-pdd">
                         <div class="sn-field">
-                          <input type="text" name="email" placeholder="Email" />
+                          <input type="text" name="email" placeholder="Email" v-model="loginEmail" />
                           <i class="fa fa-envelope"></i>
                         </div>
                         <!--sn-field end-->
@@ -59,6 +59,7 @@
                             type="password"
                             name="password"
                             placeholder="Password"
+                            v-model="loginPassword"
                           />
                           <i class="fa fa-lock"></i>
                         </div>
@@ -173,16 +174,17 @@
                             <!--fgt-sec end-->
                           </div>
                         </div>
-                        <div class="col-lg-12 no-pdd">
+                        <div class="col-lg-12 no-pdd row">
                           <button
                             :class="{
                               'cursor-not-allowed': this.registerToS == false,
                             }"
-                            :disabled="this.registerToS === false" 
+                            :disabled="this.registerToS === false"
                             v-on:click="registerValidation()"
                           >
                             Sign Up
                           </button>
+                          <img class="btn-register" :class="{'display-none' : this.registerProcessing === false}" width="40px" height="40px" src="/src/assets/loading.gif" alt="" srcset="">
                         </div>
                       </div>
                     </div>
@@ -202,7 +204,7 @@
 
 <script>
 // import Vue from 'vue'
-// import axios from 'axios'
+import axios from 'axios'
 
 // import component1 from 'component1'
 // import component2 from 'component2'
@@ -228,6 +230,10 @@ export default {
       registerFullName: "",
       registerCountry: "",
       registerToS: false,
+      registerProcessing: false,
+
+      // login 
+      //
 
       // error messages
       registerErrorEmailMsg: "",
@@ -426,20 +432,37 @@ export default {
      * Redirect route /auth
      */
     async register() {
+      // Disable register button while processing
+      this.registerCheckAllow();
+      this.registerProcessing = true;
+
       try {
-        const callRegisterAPI = await axios
-          .post("/register", {
-            // Pass params to header
+        const callRegisterAPI = await axios.post("http://localhost/WiseSocial/wisesocial_api/public/api/register", {
+            // Pass param to header
+            name: this.registerFullName,
+            email: this.registerEmail,
+            password: this.registerPassword,
+            re_password: this.registerRePassword,
           })
-          .then(function (response) {
-            // API response success
+          .then(function (res) {
+            // Api response success
+            if (res.data.code == 200) {
+              window.location.reload();
+            } else {
+              alert(res.data.message);
+            }
           })
-          .catch(function (error) {
+          .catch(function (err) {
             // API response error code
+            alert(err);
           });
       } catch (err) {
-        // console.log(err);
+        // Call to api failed
+        console.log(err);
       }
+      // Re-enable register button
+      this.registerCheckAllow();
+      this.registerProcessing = false;
     },
   },
 };

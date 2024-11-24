@@ -7976,3 +7976,11 @@ background: #555;
 .suggestion-usd>span i:hover {
     color: white !important;
 }
+
+.btn-register {
+    margin-top: 10%;
+}
+
+.display-none {
+    display: none;
+}
