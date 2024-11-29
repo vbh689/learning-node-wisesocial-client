@@ -48,7 +48,15 @@
                     <div class="row">
                       <div class="col-lg-12 no-pdd">
                         <div class="sn-field">
-                          <input type="text" name="email" placeholder="Email" v-model="loginEmail" />
+                          <input
+                            type="text"
+                            name="email"
+                            placeholder="Email"
+                            v-model="loginEmail"
+                          />
+                          <span class="text-danger msgError">{{
+                            loginErrEmailMsg
+                          }}</span>
                           <i class="fa fa-envelope"></i>
                         </div>
                         <!--sn-field end-->
@@ -62,10 +70,19 @@
                             v-model="loginPassword"
                           />
                           <i class="fa fa-lock"></i>
+                          <span class="text-danger msgError">{{
+                            loginErrPasswordMsg
+                          }}</span>
                         </div>
                       </div>
                       <div class="col-lg-12 no-pdd">
-                        <button type="submit" value="submit">Sign In</button>
+                        <button
+                          type="submit"
+                          value="submit"
+                          v-on:click="login()"
+                        >
+                          Sign In
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -184,7 +201,17 @@
                           >
                             Sign Up
                           </button>
-                          <img class="btn-register" :class="{'display-none' : this.registerProcessing === false}" width="40px" height="40px" src="/src/assets/loading.gif" alt="" srcset="">
+                          <img
+                            class="btn-register"
+                            :class="{
+                              'display-none': this.registerProcessing === false,
+                            }"
+                            width="40px"
+                            height="40px"
+                            src="/src/assets/loading.gif"
+                            alt=""
+                            srcset=""
+                          />
                         </div>
                       </div>
                     </div>
@@ -204,7 +231,7 @@
 
 <script>
 // import Vue from 'vue'
-import axios from 'axios'
+import axios from "axios";
 
 // import component1 from 'component1'
 // import component2 from 'component2'
@@ -232,8 +259,13 @@ export default {
       registerToS: false,
       registerProcessing: false,
 
-      // login 
-      //
+      // login
+      loginEmail: "",
+      loginPassword: "",
+      loginToS: false,
+      loginErrEmailMsg: "",
+      loginErrPasswordMsg: "",
+      loginProcessing: false,
 
       // error messages
       registerErrorEmailMsg: "",
@@ -397,6 +429,25 @@ export default {
       }
     },
 
+    login() {
+      if (this.loginEmail.length <= 0) {
+        this.loginErrEmailMsg = "Email is required.";
+      } else {
+        this.loginErrEmailMsg = "";
+      }
+
+      if (this.loginPassword.length < 8) {
+        this.loginErrPasswordMsg = "Password is required.";
+      } else {
+        this.loginErrPasswordMsg = "";
+      }
+
+      if (this.loginErrEmailMsg == "" && this.loginErrPasswordMsg == "") {
+        // Call to login function
+        this.processLogin();
+      }
+    },
+
     /**
      * Default function to choose login or register
      *
@@ -437,13 +488,17 @@ export default {
       this.registerProcessing = true;
 
       try {
-        const callRegisterAPI = await axios.post("http://localhost/WiseSocial/wisesocial_api/public/api/register", {
-            // Pass param to header
-            name: this.registerFullName,
-            email: this.registerEmail,
-            password: this.registerPassword,
-            re_password: this.registerRePassword,
-          })
+        const callRegisterAPI = await axios
+          .post(
+            "http://localhost/wisesocial_api/public/api/register",
+            {
+              // Pass param to header
+              name: this.registerFullName,
+              email: this.registerEmail,
+              password: this.registerPassword,
+              re_password: this.registerRePassword,
+            }
+          )
           .then(function (res) {
             // Api response success
             if (res.data.code == 200) {
@@ -462,6 +517,45 @@ export default {
       }
       // Re-enable register button
       this.registerCheckAllow();
+      this.registerProcessing = false;
+    },
+
+    /**
+     * Async/await for login function
+     *
+     * Call to /login endpoint
+     * Method: POST pass param
+     * Redirect route /index
+     */
+    async processLogin() {
+      // Disable register button while processing
+      this.loginProcessing = true;
+
+      try {
+        const callLoginAPI = await axios
+          .post("http://localhost/wisesocial_api/public/api/login", {
+            // Pass param to header
+            email: this.loginEmail,
+            password: this.loginPassword,
+          })
+          .then(function (res) {
+            // Api response success
+            if (res.data.code == 200) {
+              // window.location.href = "/index";
+              console.log(res.data);
+            } else {
+              alert(res.data.message);
+            }
+          })
+          .catch(function (err) {
+            // API response error code
+            alert(err);
+          });
+      } catch (err) {
+        // Call to api failed
+        console.log(err);
+      }
+      // Re-enable button
       this.registerProcessing = false;
     },
   },
