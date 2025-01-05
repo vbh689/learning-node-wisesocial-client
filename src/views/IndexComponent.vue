@@ -6,6 +6,7 @@ import MyFavoriteComponent from '@/components/MyFavoriteComponent.vue';
 import SuggestionComponent from '@/components/SuggestionComponent.vue';
 import TimelimeComponent from '@/components/TimelimeComponent.vue';
 import UserProfileComponent from '@/components/UserProfileComponent.vue';
+import ChatComponent from '@/components/ChatComponent.vue';
 </script>
 
 <template>
@@ -71,5 +72,6 @@ import UserProfileComponent from '@/components/UserProfileComponent.vue';
       </div>
     </main>
     <!--chatbox-list end-->
+    <ChatComponent />
   </div>
 </template>
