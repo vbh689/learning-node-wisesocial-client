@@ -541,6 +541,9 @@ export default {
           .then(function (res) {
             // Api response success
             if (res.data.code == 200) {
+              // Save token to session storage
+              sessionStorage.setItem("token", res.data.data.plainTextToken)
+
               window.location.href = "/index";
             } else {
               alert(res.data.message);
