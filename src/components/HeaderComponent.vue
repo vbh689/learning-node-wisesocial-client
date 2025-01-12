@@ -10,11 +10,35 @@
         <!--logo end-->
         <div class="search-bar">
           <form>
-            <input type="text" name="search" placeholder="検索..." />
-            <button type="submit"><i class="fa fa-search"></i></button>
+            <input
+              v-on:keypress="search()"
+              type="text"
+              name="search"
+              placeholder="Search..."
+              v-model="keyWord"
+            />
+            <button><i class="fa fa-search"></i></button>
           </form>
+
+          <div v-if="searchStatus" class="" id="area-chat">
+            <div v-for="user in users" class="account-item">
+              <div class="avatar">
+                <img
+                  v-if="user.avatar == null"
+                  src="../assets/images/resources/user2.png"
+                  alt=""
+                />
+                <img v-else :src="user.avatar" alt="" />
+              </div>
+              <div class="infor">
+                <div class="name">{{ user.name }}</div>
+                <div class="exp">{{ user.experience }}</div>
+              </div>
+            </div>
+          </div>
         </div>
         <!--search-bar end-->
+
         <nav>
           <ul>
             <li>
@@ -105,6 +129,7 @@
           </ul>
         </nav>
         <!--nav end-->
+
         <div class="menu-btn">
           <a href="#" title=""><i class="fa fa-bars"></i></a>
         </div>
@@ -127,3 +152,165 @@
     </div>
   </header>
 </template>
+
+<script>
+// import Vue from 'vue'
+import axios from "axios";
+
+// import component1 from 'component1'
+// import component2 from 'component2'
+
+// bat dau phan than cua chuong trinh vuejs
+export default {
+  /***********************************************************************************************************
+   ******************************* Pass data to child component **********************************************
+   **********************************************************************************************************/
+  // props: [variable1, variable2],
+  // components: {component1, component2},
+  data() {
+    /***********************************************************************************************************
+     ******************************* Initialize global variables ***********************************************
+     **********************************************************************************************************/
+    return {
+      msg: "Hello world!",
+      users: [],
+      token: sessionStorage.getItem("token"),
+      keyWord: "",
+      searchStatus: false,
+    };
+  },
+
+  created() {
+    /***********************************************************************************************************
+     *********************** Initialize data when this component is used. **************************************
+     **********************************************************************************************************/
+    // this.search();
+
+  },
+  mounted() {
+    /***********************************************************************************************************
+     ******************** Once created, the interface is displayed and calls mounted. **************************
+     **********************************************************************************************************/
+  },
+  watch: {
+    /***********************************************************************************************************
+     ********************************* Methods change value for a variable *************************************
+     **********************************************************************************************************/
+    msg() {
+      console.log(
+        "When the value of the msg variable changes, this method will be executed."
+      );
+    },
+  },
+  computed: {
+    appendMsg() {
+      return (
+        msg +
+        "Process the value and assign the value to the corresponding variable the var has changed."
+      );
+    },
+  },
+  methods: {
+    /***********************************************************************************************************
+     ******************************* Default functions that handle local data **********************************
+     **********************************************************************************************************/
+
+    /**
+     * Example default function not using param
+     */
+    defaultFunction() {
+      this.msg = "Replace message here!";
+    },
+
+    /**
+     * Example default function using param
+     *
+     * @param int pageNum number of page
+     * @return boolean
+     */
+    defaultFunctionUsingParam(pageNum) {
+      console.log(pageNum);
+      return false;
+    },
+
+    /***********************************************************************************************************
+     ******* Async and await functions for manipulating server-side data through internal API protocols ********
+     **********************************************************************************************************/
+
+    /**
+     * Call API sample
+     */
+    async search() {
+      this.searchStatus = true;
+      try {
+        const callAPI = await axios.get(
+          "http://localhost/wisesocial_api/public/api/search",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.token,
+            },
+            params: {
+              "key-word": this.keyWord,
+            },
+          }
+        );
+        if (callAPI.data.code == 200) {
+          this.users = callAPI.data.data;
+        } else {
+          alert("Call API failed, please check again!");
+        }
+        console.log(callAPI.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+};
+</script>
+
+<style>
+#area-chat {
+  height: 529px;
+  background: ghostwhite;
+  border: gray;
+  width: 500px;
+  margin-top: 40px;
+  position: absolute;
+  z-index: 9;
+  /* border-radius: 5px; */
+  overflow: auto;
+}
+.account-item {
+  border-bottom: 1px dotted gray;
+  display: flex;
+  padding-bottom: 15px;
+}
+.account-item .avatar {
+  width: 15%;
+}
+.account-item img {
+  margin-top: 15px;
+  margin-left: 15px;
+  max-width: 56px;
+}
+.account-item .infor {
+  padding-left: 15px;
+  width: 85%;
+}
+.account-item .infor .name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+.account-item .infor .exp {
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 5px;
+}
+.account-item:hover {
+  background: white;
+  cursor: pointer;
+  /* border-radius: 15px; */
+}
+</style>
