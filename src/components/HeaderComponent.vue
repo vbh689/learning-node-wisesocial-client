@@ -185,13 +185,17 @@ export default {
      *********************** Initialize data when this component is used. **************************************
      **********************************************************************************************************/
     // this.search();
-
   },
   mounted() {
     /***********************************************************************************************************
      ******************** Once created, the interface is displayed and calls mounted. **************************
      **********************************************************************************************************/
+    document.addEventListener("click", this.handleClickOutside);
   },
+  beforeDestroy() {
+    document.removeEventListener("click", this.handleClickOutside);
+  },
+
   watch: {
     /***********************************************************************************************************
      ********************************* Methods change value for a variable *************************************
@@ -237,6 +241,13 @@ export default {
      ******* Async and await functions for manipulating server-side data through internal API protocols ********
      **********************************************************************************************************/
 
+    handleClickOutside(event) {
+      const areaChat = this.$el.querySelector("#area-chat");
+      if (areaChat && !areaChat.contains(event.target)) {
+        this.searchStatus = false;
+      }
+    },
+    
     /**
      * Call API sample
      */
