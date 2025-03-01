@@ -16,9 +16,12 @@
           <h4>{{ friend.name }}</h4>
           <span>{{ friend.experience }}</span>
         </div>
-        <span v-on:click="addFriend(friend.id)"
-          ><i class="fa fa-plus"></i
-        ></span>
+        <span 
+          v-on:click="!isAddingFriend[friend.id] && addFriend(friend.id)"
+          :class="{ 'disabled': isAddingFriend[friend.id] }"
+        >
+          <i class="fa fa-plus"></i>
+        </span>
       </div>
     </div>
     <!--suggestions-list end-->
@@ -48,6 +51,7 @@ export default {
       users: [],
       token: sessionStorage.getItem("token"),
       suggestFriend: [],
+      isAddingFriend: {},  // Track loading state for each friend
     };
   },
   created() {
@@ -107,6 +111,7 @@ export default {
      **********************************************************************************************************/
 
     async addFriend(friendId) {
+      this.isAddingFriend[friendId] = true;  // Disable button
       try {
         const callAPI = await axios.get(
           "http://localhost/wisesocial_api/public/api/add-friend",
@@ -125,9 +130,10 @@ export default {
         } else {
           alert("Call API failed, please check again!");
         }
-        console.log(callAPI.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        this.isAddingFriend[friendId] = false;  // Re-enable button
       }
     },
 
@@ -181,4 +187,8 @@ export default {
 /**
 * Custom local style css
 */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 </style>
