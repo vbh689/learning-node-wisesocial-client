@@ -233,6 +233,8 @@
 // import Vue from 'vue'
 import axios from "axios";
 
+import { requestPermission } from "../firebase"; // Import firebase settings
+
 // import component1 from 'component1'
 // import component2 from 'component2'
 
@@ -266,6 +268,7 @@ export default {
       loginErrEmailMsg: "",
       loginErrPasswordMsg: "",
       loginProcessing: false,
+      token: null,
 
       // error messages
       registerErrorEmailMsg: "",
@@ -320,6 +323,9 @@ export default {
       console.log(
         "When the value of the msg variable changes, this method will be executed."
       );
+    },
+    token() {
+      alert(this.token);
     },
   },
   computed: {
@@ -489,16 +495,13 @@ export default {
 
       try {
         const callRegisterAPI = await axios
-          .post(
-            "http://localhost/wisesocial_api/public/api/register",
-            {
-              // Pass param to header
-              name: this.registerFullName,
-              email: this.registerEmail,
-              password: this.registerPassword,
-              re_password: this.registerRePassword,
-            }
-          )
+          .post("http://localhost/wisesocial_api/public/api/register", {
+            // Pass param to header
+            name: this.registerFullName,
+            email: this.registerEmail,
+            password: this.registerPassword,
+            re_password: this.registerRePassword,
+          })
           .then(function (res) {
             // Api response success
             if (res.data.code == 200) {
@@ -542,9 +545,34 @@ export default {
             // Api response success
             if (res.data.code == 200) {
               // Save token to session storage
-              sessionStorage.setItem("token", res.data.data.plainTextToken)
+              sessionStorage.setItem("token", res.data.data.plainTextToken);
 
-              window.location.href = "/index";
+              // Request notification permission when the app starts.
+              requestPermission()
+                .then((fcmToken) => {
+                  // Using axios call to server add token to DB
+                  axios
+                    .get(
+                      "http://localhost/wisesocial_api/public/api/setDeviceToken",
+                      {
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization:
+                            "Bearer " + res.data.data.plainTextToken,
+                        },
+                        params: {
+                          // Pass param to header
+                          fcmToken: fcmToken,
+                        },
+                      }
+                    )
+                    .then(function () {
+                      window.location.href = "/index";
+                    });
+                })
+                .catch((err) => {
+                  console.error("Get token error: ", err);
+                });
             } else {
               alert(res.data.message);
             }
