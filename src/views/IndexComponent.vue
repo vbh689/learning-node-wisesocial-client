@@ -4,7 +4,7 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
 import MostFollowComponent from '@/components/MostFollowComponent.vue';
 import MyFavoriteComponent from '@/components/MyFavoriteComponent.vue';
 import SuggestionComponent from '@/components/SuggestionComponent.vue';
-import TimelimeComponent from '@/components/TimelimeComponent.vue';
+import TimelineComponent from '@/components/TimelineComponent.vue';
 import UserProfileComponent from '@/components/UserProfileComponent.vue';
 import ChatComponent from '@/components/ChatComponent.vue';
 </script>
@@ -44,7 +44,7 @@ import ChatComponent from '@/components/ChatComponent.vue';
               <div class="col-lg-6 col-md-8 no-pd">
 
                 <!-- Main-ws -->
-                 <TimelimeComponent/>
+                 <TimelineComponent/>
                 <!--main-ws-sec end-->
 
               </div>
@@ -72,6 +72,6 @@ import ChatComponent from '@/components/ChatComponent.vue';
       </div>
     </main>
     <!--chatbox-list end-->
-    <ChatComponent />
+    <!-- <ChatComponent /> -->
   </div>
 </template>
