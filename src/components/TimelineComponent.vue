@@ -20,209 +20,103 @@
       </div>
       <!--post-st end-->
     </div>
+
     <!--post-topbar end-->
     <div class="posts-section">
-      <div class="post-bar">
-        <div class="post_topbar">
-          <div class="usy-dt">
-            <img src="../assets/images/resources/us-pic.png" alt="" />
-            <div class="usy-name">
-              <h3>Minh Chính Phạm</h3>
-              <span><img src="../assets/images/clock.png" alt="" />05月07日</span>
-            </div>
-          </div>
-          <div class="ed-opts">
-            <a href="#" title="" class="ed-opts-open"><i class="fa fa-ellipsis-v"></i></a>
-            <ul class="ed-options">
-              <!-- My post has edit and delete -->
-              <li><a href="#" title="">編集</a></li>
-              <li><a href="#" title="">削除</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="epi-sec">
-          <ul class="descp">
-            <!-- Jobs -->
-            <li>
-              <img src="../assets/images/icon8.png" alt="" /><span>元首相</span>
-            </li>
-            <!-- Nationality -->
-            <li>
-              <img src="../assets/images/icon9.png" alt="" /><span>VietNam</span>
-            </li>
-          </ul>
-          <ul class="bk-links">
-            <!-- Add to bookmark -->
-            <li>
-              <a href="#" title=""><i class="fa fa-bookmark"></i></a>
-            </li>
-            <!-- Go to message page -->
-            <li>
-              <a href="messages.html" title=""><i class="fa fa-envelope"></i></a>
-            </li>
-          </ul>
-        </div>
-        <!-- Post description -->
-        <div class="job_descp">
-          <h3>共産党の上級政治局</h3>
-          <ul class="job-dt">
-            <li><a href="#" title="">フルタイム</a></li>
-            <li><span>$30 / 時間</span></li>
-          </ul>
-          <p>
-            中際提けトイつ売主ケキ膀認ねず務法債ぞろ惜禁け割門9要ワキ家際ほもば木久まき容純菜ぎぽぞ載動宅略石れざきこ。。。
-            <a href="#" title="">もっと見る</a>
-          </p>
-        </div>
-        <hr />
-        <div class="skill-tags-area">
-          <ul class="skill-tags">
-            <li><a href="#" title="">経済学博士</a></li>
-            <li><a href="#" title="">経済大臣</a></li>
-            <li><a href="#" title="">首相</a></li>
-          </ul>
-        </div>
-        <!-- End description -->
-        <div class="job-status-bar">
-          <ul class="like-com">
-            <li>
-              <a class="color-b2b2b2 cusror-poiter hover-color"><i class="fa fa-heart"></i> いいね (25)</a>
-            </li>
-            <li>
-              <a class="color-b2b2b2 cusror-poiter hover-color"><i class="fa fa-comment-alt"></i> コメント (15)</a>
-            </li>
-          </ul>
-          <a><i class="fa fa-eye"></i>閲覧数 (50)</a>
-        </div>
-      </div>
-      <!--post-bar end-->
-      <!-- Begin a post -->
-      <div class="post-bar">
-        <div class="post_topbar">
-          <div class="usy-dt">
-            <img src="../assets/images/resources/us-pic.png" alt="" />
-            <div class="usy-name">
-              <h3>Phúc Nguyễn Xuân</h3>
-              <span><img src="../assets/images/clock.png" alt="" />05月06日</span>
-            </div>
-          </div>
-          <div class="ed-opts">
-            <a href="#" title="" class="ed-opts-open"><i class="fa fa-ellipsis-v"></i></a>
-            <ul class="ed-options">
-              <li><a href="#" title="">編集</a></li>
-              <li><a href="#" title="">削除</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="epi-sec">
-          <ul class="descp">
-            <li>
-              <img src="../assets/images/icon8.png" alt="" /><span>元大統領</span>
-            </li>
-            <li>
-              <img src="../assets/images/icon9.png" alt="" /><span>VietNam</span>
-            </li>
-          </ul>
-          <ul class="bk-links">
-            <li>
-              <a href="#" title=""><i class="fa fa-bookmark"></i></a>
-            </li>
-            <li>
-              <a href="#" title=""><i class="fa fa-envelope"></i></a>
-            </li>
-          </ul>
-        </div>
-        <div class="job_descp">
-          <h3>共産党の上級政治局</h3>
-          <ul class="job-dt">
-            <li><a href="#" title="">フルタイム</a></li>
-            <li><span>$30 / 時間</span></li>
-          </ul>
-          <p>
-            中際提けトイつ売主ケキ膀認ねず務法債ぞろ惜禁け割門9要ワキ家際ほもば木久まき容純菜ぎぽぞ載動宅略石れざきこ。合そいやぶ間準ヌイヘミ罪高そ県1人スヲナ月7神いこ港彬ホヨアタ最非3争ミイホヘ生要きゅ熱覧ょ式司フホメ究真メスチコ革面じ訓準晶ぼフを。足リみぴ術並ちときか強官リ氷任ノヤ帳済ユコニ専氏ヌレトム登様どにだ主産ノハミ出講ヲレヤ点本レ死海さッぴ属被骨け歳乗歌規なそご。。。
-            <a href="#" title="">もっと見る</a>
-          </p>
-          <ul class="skill-tags">
-            <li><a href="#" title="">元首相</a></li>
-            <li><a href="#" title="">大統領</a></li>
-          </ul>
-        </div>
-        <div class="job-status-bar">
-          <ul class="like-com">
-            <li>
-              <a class="color-b2b2b2 cusror-poiter hover-color"><i class="fa fa-heart"></i> いいね (25)</a>
-            </li>
-            <li>
-              <a class="color-b2b2b2 cusror-poiter hover-color"><i class="fa fa-comment-alt"></i> コメント (15)</a>
-            </li>
-          </ul>
-          <a href="#"><i class="fas fa-eye"></i>閲覧数 (50)</a>
-        </div>
-      </div>
-      <!--post-bar end-->
-      <div class="posty">
+
+      <div v-for="post in timelinePost" class="posty">
         <div class="post-bar no-margin">
           <div class="post_topbar">
             <div class="usy-dt">
-              <img src="../assets/images/resources/us-pc2.png" alt="" />
+              <img width="52px" v-if="post.author._avatar != null" :src="post.author._avatar" :alt="post.author.name"
+                :title="post.author.name" />
+              <img width="52px" v-else src="../assets/images/resources/us-pc2.png" alt="">
+
               <div class="usy-name">
-                <h3>Trần Dần</h3>
-                <span><img src="../assets/images/clock.png" alt="" />3 min
-                  ago</span>
+                <h3>{{ post.author.name }}</h3>
+                <span><img src="../assets/images/clock.png" alt="" />{{ post.since_created }}</span>
               </div>
             </div>
             <div class="ed-opts">
               <!-- Not my own post here none -->
             </div>
           </div>
+
           <div class="epi-sec">
+            <!-- Begin of description section which includes experience and location -->
             <ul class="descp">
+              <!-- Display experience icon and experience text if available -->
               <li>
-                <img src="../assets/images/icon8.png" alt="" /><span>宇宙予言</span>
+                <img src="../assets/images/icon8.png" alt="Experience Icon" /><span>{{ post.experiences }}</span>
               </li>
+              <!-- Display location icon and location text if available, otherwise show default location -->
               <li>
-                <img src="../assets/images/icon9.png" alt="" /><span>India</span>
+                <img src="../assets/images/icon9.png" alt="Location Icon" />
+                <span v-if="post.location">{{ post.location }}</span>
+                <span v-else>Vietnam</span>
               </li>
             </ul>
+            <!-- End of description section -->
+
+            <!-- Begin of bookmark section which includes bookmark functionality -->
             <ul class="bk-links">
+              <!-- Display bookmark icon with grey background if post is bookmarked, otherwise with default background -->
               <li>
-                <a href="#" title=""><i class="fa fa-bookmark"></i></a>
-              </li>
-              <li>
-                <a href="#" title=""><i class="fa fa-envelope"></i></a>
+                <p v-if="post.favorites.length > 0" title="Bookmark" v-on:click="removeFavorite(post.id)">
+                  <i style="background-color: grey;" class="fa fa-bookmark"></i>
+                </p>
+                <p v-else title="Bookmark" v-on:click="addFavorite(post.id)">
+                  <i class="fa fa-bookmark"></i>
+                </p>
               </li>
             </ul>
+            <!-- End of bookmark section -->
           </div>
+
+          <!-- Begin of the job description section -->
           <div class="job_descp">
-            <h3>アメリカ共和党顧問</h3>
-            <ul class="job-dt">
-              <li><a href="#" title="">フルタイム</a></li>
-              <li><span>$30 / 時間</span></li>
-            </ul>
-            <p>
-              主ケキ膀認ねず務法債中際提けトイつ売ぞろ惜禁け割門9要ワキ家際ほもば木久まき容純菜ぎぽぞ載動宅略石れざきこ。。。
-              <a href="#" title="">もっと見る</a>
-            </p>
-            <ul class="skill-tags">
-              <li><a href="#" title="">アメリカ共和党顧問</a></li>
-              <li>
-                <a href="#" title="">ベトナム共産党スパイ</a>
+            <!-- Display short content of the post if available and read more is not clicked -->
+            <div class="content" v-if="post.short_content && showReadMore.indexOf(post.id) == -1">
+              {{ post.short_content }}
+              <!-- Show the 'see more' link to read full content -->
+              <span class="text-danger txt-readmore" v-on:click="readMore(post.id)"> ... See more</span>
+            </div>
+            <!-- Display full content of the post if read more is clicked -->
+            <div class="content" v-else> {{ post.content }}</div>
+            <br>
+
+            <!-- Display skill tags if there are any skills associated with the post -->
+            <ul class="skill-tags" v-if="post.skills.length > 0">
+              <!-- Loop through each skill and display it as a list item -->
+              <li v-for="skill in post.skills">
+                <a href="#" title="">{{ skill.skill }}</a>
               </li>
             </ul>
           </div>
+          <!-- End of the job description section -->
+
           <div class="job-status-bar">
             <ul class="like-com">
               <li>
-                <a class="color-b2b2b2 cusror-poiter hover-color"><i class="fa fa-heart"></i> いいね (25)</a>
+                <a v-if="post.is_like == 0" v-on:click="like(post.id, 'like')"
+                  class="color-b2b2b2 cusror-poiter hover-color">
+                  <i class="fa fa-heart"></i> いいね ({{ post.total_like }})
+                </a>
+                <a v-else v-on:click="like(post.id, 'unlike')"
+                  class="text-danger color-b2b2b2 cusror-poiter hover-color">
+                  <i class="fa fa-heart"></i> いいね ({{ post.total_like }})
+                </a>
               </li>
               <li>
-                <a class="color-b2b2b2 cusror-poiter hover-color"><i class="fa fa-comment-alt"></i> コメント (15)</a>
+                <a class="color-b2b2b2 cusror-poiter hover-color">
+                  <i class="fa fa-comment-alt"></i> コメント ({{ post.total_comment }})</a>
               </li>
             </ul>
-            <a href="#"><i class="fa fa-eye"></i>閲覧数 (50)</a>
+            <a href="#"><i class="fa fa-eye"></i>閲覧数 ({{ post.view_count }})</a>
           </div>
         </div>
         <!--post-bar end-->
+
         <div class="comment-section">
           <div class="comment-sec">
             <ul>
@@ -299,6 +193,7 @@
         <!--comment-section end-->
       </div>
       <!--posty end-->
+
       <div class="process-comm">
         <div class="spinner">
           <div class="bounce1"></div>
@@ -307,8 +202,10 @@
         </div>
       </div>
       <!--process-comm end-->
+
     </div>
     <!--posts-section end-->
+
   </div>
 </template>
 
@@ -336,6 +233,10 @@ export default {
       posts: "",
       postImage: null,
       token: sessionStorage.getItem("token"),
+      offset: 0,
+      limit: 6,
+      timelinePost: [],
+      showReadMore: []
     };
   },
   created() {
@@ -345,7 +246,7 @@ export default {
     console.log(
       "Init created component and call to function get data from api server."
     );
-    // this.callAPI();
+    this.timeLine();
   },
   mounted() {
     /***********************************************************************************************************
@@ -382,55 +283,189 @@ export default {
       this.msg = "Replace message here!";
     },
 
+    // Function to handle image selection from the file input
     chooseImage(event) {
+      // Get the selected file from the event
       let file = event.target.files[0];
-      // console.log(file);
-      if (file.type != 'image/jpeg' && file.type != 'image/png') {
-        alert("Wrong image format.");
-        return null;
-      }
-      if (file.size > 2048000) {
-        alert("Only image smaller than 2MB allowed.")
+
+      // Check if the file is not a JPEG or PNG image
+      if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+        alert("Wrong image format. Please upload a JPEG or PNG image.");
         return null;
       }
 
+      // Check if the file size exceeds 2MB (2048000 bytes)
+      if (file.size > 2048000) {
+        alert("Only images smaller than 2MB are allowed.");
+        return null;
+      }
+
+      // Assign the selected file to the postImage variable
       this.postImage = file;
     },
 
+    // Asynchronous function to submit a new post with content and an optional image
     async submit() {
+      // Check if the post content is empty or null
       if (this.posts == '' || this.posts == null) {
-        alert("Post content is empty.");
+        alert("Post content is empty. Please enter some content.");
         return null;
       }
 
+      // Create a new FormData object to hold the post data
       let formData = new FormData();
+      // Append the post content to the FormData object
       formData.append('content', this.posts);
+      // Append the image file to the FormData object if it exists
       formData.append('image', this.postImage);
-      // Send to server
+
+      // Send a POST request to the server to create a new post
       try {
         const callAPI = await axios.post(
           "http://localhost/wisesocial_api/public/api/create-post",
           formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + this.token,
+            "Content-Type": "multipart/form-data", // Set the content type to multipart/form-data
+            Authorization: "Bearer " + this.token, // Include the authorization token
           }
         }
         );
+
+        // Check if the API call was successful
         if (callAPI.data.code == 200) {
+          // Update the suggestFriend data with the response data
           this.suggestFriend = callAPI.data.data;
-          // TODO reload all posts
+          // TODO: Reload all posts to include the newly created post
           return null;
         } else {
+          // Alert the user if the API call failed
           alert("Call API failed, please check again!");
         }
+        // Log the API response data to the console
         console.log(callAPI.data);
       } catch (err) {
+        // Log any errors to the console
         console.log(err);
       }
+    },
 
-      // console.log(this.postImage);
-      // console.log(this.posts);
+    /**
+     * Fetches the user's timeline data from the server.
+     */
+    async timeLine() {
+      try {
+        // Make a GET request to the timeline API endpoint
+        const callAPI = await axios.get(
+          "http://localhost/wisesocial_api/public/api/timeline",
+          {
+            headers: {
+              "Content-Type": "application/json", // Set the content type to JSON
+              Authorization: "Bearer " + this.token, // Include the authorization token
+            },
+            params: {
+              offset: this.offset, // Offset for pagination
+              limit: this.limit // Limit the number of posts fetched
+            }
+          }
+        );
+
+        // Check if the API call was successful
+        if (callAPI.data.code == 200) {
+          // Assign the fetched timeline data to the timelinePost variable
+          this.timelinePost = callAPI.data.data;
+        } else {
+          // Alert the user if the API call failed
+          alert("Call API failed, please check again!");
+        }
+      } catch (err) {
+        // Log any errors to the console
+        console.log(err);
+      } finally {
+        // Re-enable the button for adding Friend (if previously disabled)
+        // this.isAddingFriend[friendId] = false;
+      }
+    },
+
+    /**
+     * Adds the postId to the showReadMore array to indicate that the post should be expanded.
+     * @param {number} postId - The ID of the post to expand.
+     */
+    readMore(postId) {
+      this.showReadMore.push(postId); // Add the postId to the showReadMore array
+    },
+
+    /**
+     * Adds a bookmark for a specific post.
+     * @param {number} postId - The ID of the post to bookmark.
+     */
+    async addFavorite(postId) {
+      try {
+        // Make a GET request to the add-favorite API endpoint
+        const callAPI = await axios.get(
+          "http://localhost/wisesocial_api/public/api/add-favorite",
+          {
+            headers: {
+              "Content-Type": "application/json", // Set the content type to JSON
+              Authorization: "Bearer " + this.token, // Include the authorization token
+            },
+            params: {
+              post_id: postId // Include the post ID as a parameter
+            }
+          }
+        );
+
+        // Check if the API call was successful
+        if (callAPI.data.code == 200) {
+          // Handle successful response
+          const index = this.timelinePost.findIndex(post => post.id === postId);
+          if (index !== -1) {
+            this.timelinePost[index].favorites.push({ post_id: postId });
+          }
+        } else {
+          // Alert the user if the API call failed
+          alert("Call API failed, please check again!");
+        }
+      } catch (err) {
+        // Log any errors to the console
+        console.log(err);
+      }
+    },
+
+    /**
+     * Removes a bookmark for a specific post.
+     * @param {number} postId - The ID of the post to remove from bookmarks.
+     */
+    async removeFavorite(postId) {
+      try {
+        // Make a GET request to the remove-favorite API endpoint
+        const callAPI = await axios.get(
+          "http://localhost/wisesocial_api/public/api/remove-favorite",
+          {
+            headers: {
+              "Content-Type": "application/json", // Set the content type to JSON
+              Authorization: "Bearer " + this.token, // Include the authorization token
+            },
+            params: {
+              post_id: postId // Include the post ID as a parameter
+            }
+          }
+        );
+
+        // Check if the API call was successful
+        if (callAPI.data.code == 200) {
+          // Handle successful response
+          const index = this.timelinePost.findIndex(post => post.id === postId);
+          if (index !== -1) {
+            this.timelinePost[index].favorites = [];
+          }
+        } else {
+          // Alert the user if the API call failed
+          alert("Call API failed, please check again!");
+        }
+      } catch (err) {
+        // Log any errors to the console
+        console.log(err);
+      }
     },
 
     /**
@@ -443,52 +478,6 @@ export default {
       console.log(pageNum);
       return false;
     },
-
-    /***********************************************************************************************************
-     ******* Async and await functions for manipulating server-side data through internal API protocols ********
-     **********************************************************************************************************/
-
-    // /**
-    //  * Call API sample
-    //  */
-    // async callAPI() {
-    //   try {
-    //     const callAPI = await axios.get(
-    //       "http://localhost/wisesocial_api/public/api/list-user",
-    //       {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: "Bearer " + this.token,
-    //         },
-    //       }
-    //     );
-    //     if (callAPI.data.code == 200) {
-    //       this.users = callAPI.data.data;
-    //     } else {
-    //       alert("Call API failed, please check again!");
-    //     }
-    //     console.log(callAPI.data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // },
-
-    // async deleteUser(id) {
-    //   try {
-    //     const callAPI = await axios.delete(
-    //       "http://localhost/DemoAPI/public/api/delete-user/" + id,
-    //       {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: "Bearer " + this.token,
-    //         },
-    //       }
-    //     );
-    //     this.callAPI();
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // },
   },
 };
 </script>
@@ -497,4 +486,7 @@ export default {
 /**
 * Custom local style css
 */
+.txt-readmore:hover {
+  cursor: pointer;
+}
 </style>
