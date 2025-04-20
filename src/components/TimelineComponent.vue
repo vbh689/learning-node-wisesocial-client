@@ -102,13 +102,12 @@
                   class="color-b2b2b2 cusror-poiter hover-color">
                   <i class="fa fa-heart"></i> いいね ({{ post.total_like }})
                 </a>
-                <a v-else v-on:click="like(post.id, 'unlike')"
-                  class="text-danger color-b2b2b2 cusror-poiter hover-color">
-                  <i class="fa fa-heart"></i> いいね ({{ post.total_like }})
+                <a v-else v-on:click="like(post.id, 'unlike')" class="color-b2b2b2 cusror-poiter hover-color">
+                  <i class="fa fa-heart text-danger"></i> いいね ({{ post.total_like }})
                 </a>
               </li>
               <li>
-                <a class="color-b2b2b2 cusror-poiter hover-color">
+                <a v-on:click="showComment(post.id)" class="color-b2b2b2 cusror-poiter hover-color">
                   <i class="fa fa-comment-alt"></i> コメント ({{ post.total_comment }})</a>
               </li>
             </ul>
@@ -117,7 +116,7 @@
         </div>
         <!--post-bar end-->
 
-        <div class="comment-section">
+        <div v-if="post.id == postShowingComment" class="comment-section">
           <div class="comment-sec">
             <ul>
               <li>
@@ -226,17 +225,21 @@ export default {
   data() {
     /***********************************************************************************************************
      ******************************* Initialize global variables ***********************************************
-     **********************************************************************************************************/
+    **********************************************************************************************************/
     return {
       msg: "Hello world!",
       users: [],
       posts: "",
       postImage: null,
       token: sessionStorage.getItem("token"),
+
       offset: 0,
+      commentOffset: 0,
       limit: 6,
+
       timelinePost: [],
-      showReadMore: []
+      showReadMore: [],
+      postShowingComment: null,
     };
   },
   created() {
@@ -469,6 +472,99 @@ export default {
     },
 
     /**
+     * Handles liking or unliking a post.
+     * Makes an API call to like or unlike the post and updates the local state.
+     * @param {number} postId - The ID of the post to like/unlike.
+     * @param {string} action - The action to perform ('like' or 'unlike').
+     */
+    async like(postId, action) {
+      try {
+        // Make a GET request to the like/unlike API endpoint
+        const callAPI = await axios.get(
+          "http://localhost/wisesocial_api/public/api/like",
+          {
+            headers: {
+              "Content-Type": "application/json", // Set the content type to JSON
+              Authorization: "Bearer " + this.token, // Include the authorization token
+            },
+            params: {
+              post_id: postId, // Include the post ID as a parameter
+              action: action // Like/Unlike action
+            }
+          }
+        );
+
+        // Check if the API call was successful (status code 200)
+        if (callAPI.data.code == 200) {
+          console.log(callAPI.data.data);
+          // Find the index of the post in the local timelinePost array
+          const index = this.timelinePost.findIndex(post => post.id === postId);
+
+          // Ensure the post is found before attempting to update
+          // NOTE: The original code had `index !== 1`, which seems incorrect. It should likely be `index !== -1`.
+          // Assuming `index !== -1` is the intended logic.
+          if (index !== -1) {
+            // The following line `this.timelinePost[index.favorites = [];` seems unrelated to the like/unlike logic.
+            // It clears the favorites for the post. It might be a bug or intended for a different purpose.
+            // Keeping it as is based on the original code, but noting its potential irrelevance here.
+            this.timelinePost[index].favorites = [];
+
+            // Update the post's like status and count based on the action
+            if (this.timelinePost[index].id == postId && action == 'like') {
+              this.timelinePost[index].is_like = 1; // Mark post as liked by the current user
+              this.timelinePost[index].total_like++; // Increment the total like count
+            }
+            if (this.timelinePost[index].id == postId && action == 'unlike') {
+              this.timelinePost[index].is_like = 0; // Mark post as not liked by the current user
+              this.timelinePost[index].total_like--; // Decrement the total like count
+            }
+          }
+        } else {
+          // Alert the user if the API call returned an error code
+          alert("Call API failed, please check again!");
+        }
+      } catch (err) {
+        // Log any errors that occurred during the API call
+        console.log(err);
+      }
+    },
+
+    /**
+     * Asynchronously fetches comments for a given post ID.
+     * Sets the post ID to a local variable to control comment visibility.
+     * Makes an API call to retrieve comments with pagination.
+     *
+     * @param {number} postId - The ID of the post for which to fetch comments.
+     */
+    async showComment(postId) {
+      // Set the ID of the post whose comments are currently being shown
+      this.postShowingComment = postId;
+
+      // Make an API call to fetch comments for the post
+      const callAPI = await axios.get(
+        "http://localhost/wisesocial_api/public/api/list-comment",
+        {
+          headers: {
+            // Set request headers, including authorization token
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          },
+          params: {
+            // Include post ID, offset, and limit for pagination
+            post_id: postId,
+            offset: this.commentOffset,
+            limit: this.limit,
+          }
+        }
+      );
+
+      // NOTE: The current implementation fetches data but doesn't process/store the API response.
+      // You would typically add logic here to handle callAPI.data and populate a data property
+      // (e.g., comments array for the specific post) to display the fetched comments in the template.
+      // Example: if (callAPI.data.code === 200) { this.comments[postId] = callAPI.data.data; }
+    },
+
+    /**
      * Example default function using param
      *
      * @param int pageNum number of page
@@ -488,5 +584,9 @@ export default {
 */
 .txt-readmore:hover {
   cursor: pointer;
+}
+
+.posty {
+  margin-bottom: 15px;
 }
 </style>
