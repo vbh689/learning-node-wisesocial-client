@@ -84,7 +84,6 @@
             <!-- Display full content of the post if read more is clicked -->
             <div class="content" v-else> {{ post.content }}</div>
             <br>
-
             <!-- Display skill tags if there are any skills associated with the post -->
             <ul class="skill-tags" v-if="post.skills.length > 0">
               <!-- Loop through each skill and display it as a list item -->
@@ -100,54 +99,58 @@
               <li>
                 <a v-if="post.is_like == 0" v-on:click="like(post.id, 'like')"
                   class="color-b2b2b2 cusror-poiter hover-color">
-                  <i class="fa fa-heart"></i> いいね ({{ post.total_like }})
+                  <i class="fa fa-heart"></i> Like ({{ post.total_like }})
                 </a>
                 <a v-else v-on:click="like(post.id, 'unlike')" class="color-b2b2b2 cusror-poiter hover-color">
-                  <i class="fa fa-heart text-danger"></i> いいね ({{ post.total_like }})
+                  <i class="fa fa-heart text-danger"></i> Unlike ({{ post.total_like }})
                 </a>
               </li>
               <li>
                 <a v-on:click="showComment(post.id)" class="color-b2b2b2 cusror-poiter hover-color">
-                  <i class="fa fa-comment-alt"></i> コメント ({{ post.total_comment }})</a>
+                  <i class="fa fa-comment-alt"></i> Comment ({{ post.total_comment }})</a>
               </li>
             </ul>
-            <a href="#"><i class="fa fa-eye"></i>閲覧数 ({{ post.view_count }})</a>
+            <a href="#"><i class="fa fa-eye"></i>Views ({{ post.view_count }})</a>
           </div>
         </div>
         <!--post-bar end-->
 
         <div v-if="post.id == postShowingComment" class="comment-section">
           <div class="comment-sec">
-            <ul>
-              <li>
+            <ul v-if="listComments.length > 0">
+              <li v-for="comment in listComments">
                 <div class="comment-list">
                   <div class="bg-img">
-                    <img class="ava-cmt" src="../assets/images/resources/us-pc2.png" alt="" />
+                    <img v-if="comment.avatar" class="ava-cmt" :src="comment._avatar" :alt="comment.name" />
+                    <img v-else class="ava-cmt"
+                      src="http://localhost/wisesocial_api/public/avatars/example/user-pro-img.png"
+                      :alt="comment.name" />
                   </div>
                   <div class="comment">
-                    <h3>Minh Chính Phạm</h3>
-                    <span><img src="../assets/images/clock.png" alt="" />
-                      05月06日</span>
-                    <p>中際提けトイつ売</p>
-                    <a href="#" title="" class="active"><i class="fa fa-reply-all"></i>返信</a>
+                    <h3>{{ comment.name }}</h3>
+                    <span><img src="../assets/images/clock.png" alt="{{  }}" />{{ comment._created_at }}</span>
+                    <p>{{ comment.comment }}</p>
+                    <p v-on:click="replyComment(comment.id, comment.name)" href="#" title="" class="active">
+                      <i class="fa fa-reply-all"></i>Reply
+                    </p>
                   </div>
                 </div>
                 <!--comment-list end-->
                 <!-- Reply begin -->
-                <ul>
-                  <li>
+                <ul v-if="comment.child.length > 0">
+                  <li v-for="subComment in comment.child">
                     <div class="comment-list">
                       <div class="bg-img">
-                        <img src="../assets/images/resources/bg-img2.png" alt="" />
+                        <img width="38px" v-if="subComment.author._avatar" :src="subComment.author._avatar" alt="" />
+                        <img width="38px" v-else src="../assets/images/resources/bg-img2.png" alt="" />
                       </div>
                       <div class="comment">
-                        <h3>Phúc Nguyễn Xuân</h3>
+                        <h3>{{ subComment.author.name }}</h3>
                         <span><img src="../assets/images/clock.png" alt="" />
-                          05月06日</span>
+                          {{ subComment._created_at }}</span>
                         <p>
-                          中際提けトイつ売主ケキ膀認ねず務法債ぞろ惜禁け割門9要
+                          {{ subComment.comment }}
                         </p>
-                        <a href="#" title=""><i class="fa fa-reply-all"></i>返信</a>
                       </div>
                     </div>
                     <!--comment-list end-->
@@ -179,9 +182,10 @@
           <!--comment-sec end-->
           <div class="post-comment">
             <div class="comment_box">
-              <form>
-                <input type="text" placeholder="コメント #タグ を入力" />
-                <button type="submit">
+              <form action="#">
+                <label v-if="replyingTo" class="text-danger" for="comment_form">{{ this.replyingTo }}</label>
+                <input type="text" id="comment_form" placeholder="Write your comment" v-model="comment" />
+                <button v-on:click.prevent="sendComment()" type="button">
                   <i class="fa fa-paper-plane"></i>
                 </button>
               </form>
@@ -240,6 +244,11 @@ export default {
       timelinePost: [],
       showReadMore: [],
       postShowingComment: null,
+
+      comment: '',
+      parent: 0,
+      listComments: [],
+      replyingTo: null,
     };
   },
   created() {
@@ -558,21 +567,47 @@ export default {
         }
       );
 
-      // NOTE: The current implementation fetches data but doesn't process/store the API response.
-      // You would typically add logic here to handle callAPI.data and populate a data property
-      // (e.g., comments array for the specific post) to display the fetched comments in the template.
-      // Example: if (callAPI.data.code === 200) { this.comments[postId] = callAPI.data.data; }
+      this.listComments = callAPI.data.data;
+
+      // Discard Replying to (if any)
+      this.replyingTo = null;
+      this.parent = 0;
     },
 
     /**
-     * Example default function using param
-     *
-     * @param int pageNum number of page
-     * @return boolean
+     * Sends a new comment to the server for the currently selected post.
+     * Creates FormData with post ID, comment text, and parent ID (for replies).
+     * Clears the comment input field upon success.
      */
-    defaultFunctionUsingParam(pageNum) {
-      console.log(pageNum);
-      return false;
+    async sendComment() {
+      let formData = new FormData();
+      formData.append('post_id', this.postShowingComment);
+      formData.append('comment', this.comment);
+      formData.append('parent', this.parent); // 0 for top-level comment, parent comment ID for reply
+      // Send to server
+      const callAPI = await axios.post(
+        'http://localhost/wisesocial_api/public/api/comment',
+        formData,
+        {
+          headers: {
+            "Content-type": "multipart/form-data",
+            "Authorization": "Bearer " + this.token
+          }
+        });
+      this.comment = ''; // Clear the comment input field
+
+      // TODO: Handle the API response
+
+    },
+
+    /**
+     * Sets the parent comment ID and reply target name.
+     * @param {number} parentId - The ID of the comment being replied to.
+     * @param {string} name - The name of the author of the comment being replied to.
+     */
+    replyComment(parentId, name) {
+      this.parent = parentId;
+      this.replyingTo = "Replying to " + name;
     },
   },
 };
