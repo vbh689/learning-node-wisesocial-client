@@ -266,7 +266,7 @@ export default {
           }
         }
         // Force Vue render lại nếu cần
-        this.list_comment = [...this.list_comment];
+        this.listComments = [...this.listComments];
         // Update lai toan bo component
         this.$forceUpdate();
       } else if (responseComment.type === 'message') {
