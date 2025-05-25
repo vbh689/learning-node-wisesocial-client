@@ -117,7 +117,7 @@
 
         <div v-if="post.id == postShowingComment" class="comment-section">
           <div class="comment-sec">
-            <ul v-if="listComments.length > 0">
+            <ul v-if="Array.isArray(listComments)">
               <li v-for="comment in listComments">
                 <div class="comment-list">
                   <div class="bg-img">
@@ -137,8 +137,8 @@
                 </div>
                 <!--comment-list end-->
                 <!-- Reply begin -->
-                <ul v-if="comment.child.length > 0">
-                  <li v-for="subComment in comment.child">
+                <ul v-if="Array.isArray(comment.child)">
+                  <li v-for="subComment in comment.child" :key="subComment.id">
                     <div class="comment-list">
                       <div class="bg-img">
                         <img width="38px" v-if="subComment.author._avatar" :src="subComment.author._avatar" alt="" />
@@ -147,7 +147,8 @@
                       <div class="comment">
                         <h3>{{ subComment.author.name }}</h3>
                         <span><img src="../assets/images/clock.png" alt="" />
-                          {{ subComment._created_at }}</span>
+                          {{ subComment._created_at }}
+                        </span>
                         <p>
                           {{ subComment.comment }}
                         </p>
@@ -158,7 +159,7 @@
                 </ul>
                 <!-- End reply -->
               </li>
-              <li>
+              <!-- <li>
                 <div class="comment-list">
                   <div class="bg-img">
                     <img src="../assets/images/resources/bg-img3.png" alt="" />
@@ -175,8 +176,7 @@
                     <a href="#" title=""><i class="fa fa-reply-all"></i>返信</a>
                   </div>
                 </div>
-                <!--comment-list end-->
-              </li>
+              </li> -->
             </ul>
           </div>
           <!--comment-sec end-->
@@ -226,6 +226,58 @@ export default {
    **********************************************************************************************************/
   // props: [variable1, variable2],
   // components: {component1, component2},
+
+  /**
+   * Define global service socket
+   *
+   * Listing event from socket.io server
+   * "ServerSendCommentToClient" is the name of the channel that sends notifications to all clients installed in the server socket
+  */
+  sockets: {
+    // Send data to server
+    ClientSendMessageToServer: function (responseComment) {
+      this.comment = responseComment;
+    },
+    // Listen event from server and render data
+    ServerSendMessageToClient: function (responseComment) {
+      // Push to the comment list
+      if (responseComment.type === 'comment') {
+        // Xu ly cho comment
+        let parentId = parseInt(responseComment.parent_id);
+        if (parentId == 0) {
+          // Là comment cha
+          this.listComments.push(responseComment);
+        } else {
+          // Là comment con
+          for (let i = 0; i < this.listComments.length; i++) {
+            if (this.listComments[i].id == parentId) {
+              if (Array.isArray(this.listComments[i].child)) {
+                // Đẩy vào mảng có sẵn
+                this.listComments[i].child.push(responseComment);
+              } else {
+                // Tạo mảng child mới (giữ reactive)
+                this.listComments[i] = {
+                  ...this.listComments[i],
+                  child: [responseComment]
+                };
+              }
+              break;
+            }
+          }
+        }
+        // Force Vue render lại nếu cần
+        this.list_comment = [...this.list_comment];
+        // Update lai toan bo component
+        this.$forceUpdate();
+      } else if (responseComment.type === 'message') {
+        // Xu ly cho message
+      } else {
+        console.log("Socket error!");
+      }
+    },
+  },
+
+
   data() {
     /***********************************************************************************************************
      ******************************* Initialize global variables ***********************************************
@@ -571,7 +623,23 @@ export default {
 
       // Discard Replying to (if any)
       this.replyingTo = null;
+
       this.parent = 0;
+      // TODO: Handle the API response
+      // let commentDataSendToSocket = callAPI.data.data;
+      this.$socket.emit('ClientSendMessageToServer', {
+        id: postId,
+        comment: "",
+        avatar: "",
+        name: "",
+        created_at: "",
+        updated_at: "",
+        parent_id: null,
+        child: null,
+        post_id: postId,
+        type: "comment",
+        action: "join"
+      });
     },
 
     /**
@@ -596,8 +664,33 @@ export default {
         });
       this.comment = ''; // Clear the comment input field
 
-      // TODO: Handle the API response
+      let responseComment = callAPI.data.data;
 
+      // Append the new comment to the listComments array for immediate UI update
+      if (responseComment.parent_id == 0) {
+        if (!responseComment.child) {
+          responseComment.child = [];
+        }
+        this.listComments.push(responseComment);
+      } else {
+        // Find the parent comment and append the child comment
+        // const parentComment = this.listComments.find(
+        //   (comment) => comment.id === parseInt(responseComment.parent_id)
+        // );
+        // if (parentComment) {
+        //   if (!parentComment.child) {
+        //     parentComment.child = [];
+        //   }
+        //   parentComment.child.push(responseComment);
+        // }
+        // // Force Vue to re-render the listComments array to reflect nested changes
+        // this.listComments = [...this.listComments];
+      }
+
+      this.$socket.emit(
+        'ClientSendMessageToServer',
+        responseComment,
+      );
     },
 
     /**
